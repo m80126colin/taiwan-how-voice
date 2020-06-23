@@ -8,15 +8,30 @@
     </div>
   </div>
   <div class="ui center aligned basic segment">
-    <Paginator v-model="currentPage" :countPage="countPage"></Paginator>
+    <div class="ui right action left icon fluid input">
+      <i class="search icon"></i>
+      <input type="text" v-model.trim.lazy="query" placeholder="搜尋 ...">
+      <div class="ui blue button">搜尋</div>
+    </div>
   </div>
-  <div class="ui doubling stackable four column grid">
-  <div class="ui column" v-for="item in paging" :key="item.id">
-    <Card :item="item"></Card>
-  </div>
-  </div>
-  <div class="ui center aligned basic segment">
-    <Paginator v-model="currentPage" :countPage="countPage"></Paginator>
+  <template v-if="list.length > 0">
+    <div class="ui center aligned basic segment">
+      <Paginator v-model="currentPage" :countPage="countPage"></Paginator>
+    </div>
+    <div class="ui doubling stackable four column grid">
+    <div class="ui column" v-for="item in paging" :key="item.id">
+      <Card :item="item"></Card>
+    </div>
+    </div>
+    <div class="ui center aligned basic segment">
+      <Paginator v-model="currentPage" :countPage="countPage"></Paginator>
+    </div>
+  </template>
+  <div v-else class="ui placeholder segment">
+    <div class="ui icon header">
+      <i class="music icon"></i>
+      無結果
+    </div>
   </div>
 </div>
 </template>
@@ -62,6 +77,7 @@ export default {
   components: { Card, Paginator },
   data() {
     return {
+      query: '',
       sortName,
       sortFuncs,
       sortMethods: 'New to Old',
@@ -77,7 +93,10 @@ export default {
     },
     currentPage: {
       get() { return this.pageIndex + 1 },
-      set(val) { this.pageIndex = val - 1 }
+      set(val) {
+        window.scrollTo(0, 0)
+        this.pageIndex = val - 1
+      }
     },
     paging() {
       const app = this
@@ -88,6 +107,11 @@ export default {
       const app = this
       app.pageIndex = 0
       return _.chain(app.originalList)
+        .filter(row => {
+          if (app.query === '')
+            return true
+          return row.title.includes(app.query) || row.song.includes(app.query)
+        })
         .sort(app.sortFuncs[app.sortMethods])
         .value()
     }
