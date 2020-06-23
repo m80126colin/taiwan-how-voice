@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
+const axios = require('axios')
 
 const normalisePath = (...args) => path.normalize(path.join(...args))
 
@@ -10,6 +11,10 @@ const attributeToObject = items => {
       const attr = _.trim(item)
       if (index === 0)
         return ['id', attr]
+      if (index === 1)
+        return ['date', attr]
+      if (index === 2)
+        return ['title', attr]
       if (attr === '')
         return undefined
       if (attr[0] === '@')
@@ -24,13 +29,41 @@ const attributeToObject = items => {
     .value()
   return {
     id: _.head(attrs.id),
+    date: _.head(attrs.date),
+    title: _.head(attrs.title),
     song: _.head(attrs.song) || '',
     credit: attrs.credit || [],
     tag: attrs.tag || []
   }
 }
 
-const renderDatetime = async list => {}
+const basicToObject = rows => _.chain(rows)
+  .map(row => {
+    console.log('row', row)
+    if (row.length < 2)
+      return undefined
+    return [ row[0], {
+      date: row[1],
+      title: row[2]
+    } ]
+  })
+  .compact()
+  .fromPairs()
+  .value()
+
+const renderBasic = async list => {
+  // basic.txt
+  const file = normalisePath(__dirname, 'basic.txt')
+  // load basic.txt
+  const data = fs.promises.readFile(file, 'utf-8')
+  const lookup = _.chain(data)
+    .split(/\r?\n/)
+    .map(line => _.split(line, '\t'))
+    .thru(basicToObject)
+    .value()
+  console.log(lookup, 'lookup')
+  return lookup
+}
 
 const renderer = async () => {
   // load video list
@@ -42,8 +75,9 @@ const renderer = async () => {
       .thru(attributeToObject)
       .value())
     .value()
-  const datetime = await renderDatetime(list)
+  const basic = await renderBasic(list)
   // merge data into an object
+  const result = list
   // write result
   const outputFile = normalisePath(__dirname, '..', 'public', 'videos.json')
   await fs.promises.writeFile(outputFile, JSON.stringify(result), 'utf-8')
