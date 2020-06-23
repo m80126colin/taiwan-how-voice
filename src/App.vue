@@ -65,8 +65,6 @@ export default {
       })
       .value()
     Vue.set(app, 'list', list)
-    console.log(app.list)
-    console.log('ACK!')
   }
 }
 </script>

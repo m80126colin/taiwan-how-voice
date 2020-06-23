@@ -14,9 +14,13 @@
     </div>
     <span class="ui blue" v-for="tag in item.tag" :key="tag">#{{ tag }}</span>
   </div>
-  <div class="ui segment">
-    <i class="eye icon"></i>
-    <i class="like icon"></i>
+  <div class="ui clearing segment">
+    <div class="ui views left floated basic segment">
+      <i class="eye icon"></i> --
+      <i class="like icon"></i> --
+    </div>
+    <a class="ui right floated red circular icon button"
+      target="_blank" :href="`https://www.youtube.com/watch?v=${item.id}`"><i class="youtube icon"></i></a>
   </div>
 </div>
 </template>
@@ -43,5 +47,11 @@ export default {
 <style scoped>
 h3.ui.right.floated.header {
   margin-bottom: 0;
+}
+div.views {
+  position: relative;
+  top: 50%;
+  transform: translateY(50%);
+  padding: 0 0 0 0;
 }
 </style>
