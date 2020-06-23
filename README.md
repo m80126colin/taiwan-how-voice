@@ -1,19 +1,11 @@
-# howcaloid
+# Taiwan HOW Voice 臺灣HOW聲音
 
-## Project setup
-```
-yarn install
-```
+A website for youtube videos created by [HowHow-UTAU](https://github.com/EarlySpringCommitee/HowHow-UTAU) or material from [HowFun / 超萬用祝福影片](https://www.youtube.com/watch?v=sNcvgpUqrwE).
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Thanks
 
-### Compiles and minifies for production
-```
-yarn build
-```
+* [Nat Lee](https://github.com/NatLee)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Special Thanks
+
+* [How Fun](https://www.youtube.com/channel/UCxUzQ3wu0oJP_8YLWt71WgQ)
