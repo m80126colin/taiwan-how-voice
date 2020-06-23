@@ -1,9 +1,9 @@
 module.exports = {
-  publicPath: '/howcaloid/',
+  publicPath: '/taiwan-how-voice/',
   pages: {
     index: {
       entry: 'src/main.js',
-      title: 'HOW 音未來 | Howcaloid'
+      title: '臺灣HOW聲音'
     }
   }
 }
