@@ -47,20 +47,20 @@ import Paginator from '../components/Paginator';
 const songOrder = (a, b) => (a.song > b.song ? 1 : 0) - (a.song < b.song ? 1 : 0)
 
 const sortName = {
-  'New to Old': '由新到舊',
-  'Old to New': '由舊到新',
+  'NewToOld': '由新到舊',
+  'OldToNew': '由舊到新',
   'Name': '相同歌名',
   //'View': '觀看次數',
   //'View Diff': '上升最快'
 }
 
 const sortFuncs = {
-  'New to Old': (a, b) => {
+  'NewToOld': (a, b) => {
     if (a.timestamp !== b.timestamp)
       return b.timestamp - a.timestamp
     return songOrder(a, b)
   },
-  'Old to New': (a, b) => {
+  'OldToNew': (a, b) => {
     if (a.timestamp !== b.timestamp)
       return a.timestamp - b.timestamp
     return songOrder(a, b)
@@ -80,7 +80,7 @@ export default {
       query: '',
       sortName,
       sortFuncs,
-      sortMethods: 'New to Old',
+      sortMethods: 'NewToOld',
       pageIndex: 0,
       perPage: 12,
       originalList: []
