@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "render": "node data/render.js",
+    "predeploy": "yarn render && yarn build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
